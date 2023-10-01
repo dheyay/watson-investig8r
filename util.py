@@ -3,16 +3,14 @@ import openai
 from metaphor_python import Metaphor
 from transformers import pipeline
 import re
+import markdown2
 from sentence_transformers import SentenceTransformer, util
 import requests
+from keys import METAPHOR_KEY, OPENAI_KEY
 
-# Here but can move to a seperate file
-METAPHOR_KEY = ''
-OPENAI_KEY = ''
+
 openai.api_key = OPENAI_KEY
 metaphor = Metaphor(METAPHOR_KEY)
-
-
 
 def generate_query(topic):
     """Generate a query string for a given topic using OpenAI's GPT-3.5 Turbo."""
@@ -44,9 +42,10 @@ def get_notes(content_dict):
         text += content_dict[cont] + "\n"
         all_text += text 
 
-    SYSTEM_MESSAGE = "You are an academic researcher. Present the information as a summary for academic notes on the given topic for a student to understand the topic." +  \
-        "Make the text coherent and understandable. Cite all sources at the end of the article."
-
+    SYSTEM_MESSAGE = "You are a helpful assitant with teaching experience. Present the information as a summary on the given topic for a student to understand the topic." +  \
+        "Make the text coherent and understandable. Cite sources at the end" + \
+        "Return with headings and paragraphs for the given text, making it ready to be displayed on a web page."
+    
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -54,6 +53,7 @@ def get_notes(content_dict):
             {"role": "user", "content": all_text},
         ],
     )
+
     return completion
 
 def categorize_content(content_list):
@@ -86,21 +86,30 @@ def fetch_contents(contents):
         url_dict[cont.url] = cont.extract
     return url_dict
 
+def get_embedded_links(urls):
+    embedded_links = []
+    for url in urls:
+        if "youtube.com" in url:
+            video_id = url.split("v=")[1].split("&")[0]
+            embedded_link = f'https://www.youtube.com/embed/{video_id}'
+            embedded_links.append(embedded_link)
+    return embedded_links
+
+
 
 def generate_academic_notes(topic):
     """Generate academic notes on a given topic by executing a series of content discovery, categorization, and note generation steps."""
     query = generate_query(topic)
-    print("Query: ")
-
     search_response = search_topic(query.choices[0].message.content)
-    print(search_response.get_contents().contents)
-
     text_content, video_content = categorize_content(search_response.get_contents().contents)
-
     relevant_content = get_most_relevant_content(text_content, query)
+
+    video_urls = [cont.url for cont in video_content]
 
     # For simplicity picking top 3 most relevent responses
     content = fetch_contents(relevant_content[:3])
     notes_response = get_notes(content)
     notes = notes_response.choices[0].message.content
-    return notes
+
+    html_content = markdown2.markdown(notes)
+    return html_content, video_urls

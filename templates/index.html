@@ -12,12 +12,23 @@
     </script>
 </head>
 <body>
+    <h1>watson investig8r</h1>
     <form method="post" onsubmit="showLoading()">
-        <input type="text" name="topic" placeholder="Enter topic">
+        <input type="text" name="topic" placeholder="What do you want to know about?" required >
         <button type="submit">Generate</button>
     </form>
+    <div id="loading" style="display:none;"></div>
     <div style="width: 60%; text-align: left;">
         {{ summary | safe }}
     </div>
+    {% if embedded_links %}
+    <div style="width: 60%; text-align: left; margin-top: 20px;">
+        <p>Refer to these YouTube videos if you want to learn more:</p>
+        {% for link in embedded_links %}
+            <iframe width="560" height="315" src="{{ link }}" frameborder="0" allowfullscreen></iframe>
+            <p></p>
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
 </html>
