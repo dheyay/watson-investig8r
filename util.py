@@ -7,8 +7,8 @@ from sentence_transformers import SentenceTransformer, util
 import requests
 
 # Here but can move to a seperate file
-METAPHOR_KEY = '9f36e744-0bf3-4a93-95ae-96f97aa21aec'
-OPENAI_KEY = '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'
+METAPHOR_KEY = ''
+OPENAI_KEY = ''
 openai.api_key = OPENAI_KEY
 metaphor = Metaphor(METAPHOR_KEY)
 
