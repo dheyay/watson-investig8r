@@ -2,8 +2,8 @@ from util import *
 import click
 
 @click.command()
-@click.option('--query', prompt='Enter your query', help='The query for generating academic notes.')
-def main(query):
+@click.option('--topic', prompt='Enter your query', help='The query for generating academic notes.')
+def main(topic):
     """Generate academic notes on a given topic by executing a series of content discovery, categorization, and note generation steps."""
     query = generate_query(topic)
     search_response = search_topic(query.choices[0].message.content)
