@@ -1,0 +1,18 @@
+<h2>Understanding Compilers</h2>
+<p>A compiler is a program that translates a high-level programming language into machine code that can be understood by a computer. It takes source code as input and produces executable binary code as output. Compilers have several steps of processing, including reading the characters of the source code, sorting them into words, numbers, symbols, and operators, determining the operations to be performed by matching them against patterns, and generating the equivalent binary code.</p>
+
+<h2>How Interpreters Work</h2>
+<p>Interpreters are similar to compilers in that they read and process a programming language, but they differ in how code execution occurs. Interpreters execute the code just-in-time, which means they do not produce binary code before execution. This allows for faster program execution during debug. Examples of interpreted languages include Python, Java, and JavaScript.</p>
+
+<h2>Function Activation Records</h2>
+<p>Function activation records are created by compilers each time a function is called. These records store local variables in a unique location, utilizing the processor stack. A new activation record is created at the top of the stack for each function call. In these records, the return address and old frame pointer of the calling function are stored as constant offsets. The process of creating and removing function activation records is handled by the prologue and epilogue of a function, respectively.</p>
+
+<h2>Types of Compilers</h2>
+<p>There are various types of compilers, including source-to-source compilers that transform the source code of one language into another, cross-compilers that produce code for a different machine than the one it is executed on, JIT (just-in-time) compilers that compile code during runtime, and hardware compilers that use hardware configuration to produce output.</p>
+
+<p>Sources:</p>
+<ul>
+<li><a href="https://towardsdatascience.com/understanding-compilers-for-humans-version-2-157f0edb02dd">https://towardsdatascience.com/understanding-compilers-for-humans-version-2-157f0edb02dd</a></li>
+<li><a href=https://www.section.io/engineering-education/an-overview-of-compiler-design/">https://www.section.io/engineering-education/an-overview-of-compiler-design/</a></li>
+<li><a href="https://opensource.com/article/23/3/gdb-debugger-call-frame-active-function-calls">https://opensource.com/article/23/3/gdb-debugger-call-frame-active-function-calls</a></li>
+</ul>

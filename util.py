@@ -44,7 +44,7 @@ def get_notes(content_dict):
 
     SYSTEM_MESSAGE = "You are a helpful assitant with teaching experience. Present the information as a summary on the given topic for a student to understand the topic." +  \
         "Make the text coherent and understandable. Cite sources at the end" + \
-        "Return with headings and paragraphs for the given text, making it ready to be displayed on a web page."
+        "Return with headings and paragraphs for the given text and the links in href, making it ready to be displayed on a web page."
     
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -111,5 +111,4 @@ def generate_academic_notes(topic):
     notes_response = get_notes(content)
     notes = notes_response.choices[0].message.content
 
-    html_content = markdown2.markdown(notes)
-    return html_content, video_urls
+    return notes, video_urls

@@ -22,12 +22,21 @@
         {{ summary | safe }}
     </div>
     {% if embedded_links %}
-    <div style="width: 60%; text-align: left; margin-top: 20px;">
+    <div style="width: 60%; margin-top: 20px;">
         <p>Refer to these YouTube videos if you want to learn more:</p>
-        {% for link in embedded_links %}
-            <iframe width="560" height="315" src="{{ link }}" frameborder="0" allowfullscreen></iframe>
-            <p></p>
-        {% endfor %}
+        <table>
+            {% for link in embedded_links %}
+                {% if loop.index is odd %}
+                    <tr>
+                {% endif %}
+                <td>
+                    <iframe width="560" height="315" src="{{ link }}" frameborder="0" allowfullscreen></iframe>
+                </td>
+                {% if loop.index is even %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
     </div>
     {% endif %}
 </body>
